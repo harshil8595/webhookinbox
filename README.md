@@ -70,4 +70,4 @@ These commands will bring up an App container, a Pushpin container and the Redis
 Browse to http://localhost:7999 to use application.
 
     docker-compose build --build-arg TARGETPLATFORM=linux/amd64
-    docker-compode up -d
+    docker-compose up -d
