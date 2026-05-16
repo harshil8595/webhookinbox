@@ -163,6 +163,11 @@ LOGGING = {
     }
 }
 
+if os.environ.get('ACCEPT_X_FORWARDED_PROTO') == '1':
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+elif os.environ.get('ACCEPT_X_FORWARDED_PROTO') == 'alt':
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO_ALT', 'https')
+
 REDIS_HOST = os.environ.get('REDIS_HOST')
 if 'REDIS_PORT' in os.environ:
     REDIS_PORT = int(os.environ['REDIS_PORT'])

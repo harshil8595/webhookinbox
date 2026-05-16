@@ -36,6 +36,7 @@ X-Forwarded-Port
 Grip-Sig
 Grip-Feature
 Grip-Last
+X-Forwarded-Proto-Alt
 """.split("\n")[1:-1]
 
 def _ignore_header(name):
@@ -157,9 +158,11 @@ def create(req):
 		except:
 			return HttpResponse('Service Unavailable\n', status=503)
 
+		scheme = 'https' if req.is_secure() else 'http'
+
 		out = dict()
 		out['id'] = inbox_id
-		out['base_url'] = 'http://' + host + '/i/' + inbox_id + '/'
+		out['base_url'] = scheme + '://' + host + '/i/' + inbox_id + '/'
 		out['ttl'] = ttl
 		out['response_mode'] = response_mode
 		return HttpResponse(json.dumps(out) + '\n', content_type='application/json')
@@ -181,9 +184,11 @@ def inbox(req, inbox_id):
 		except:
 			return HttpResponse('Service Unavailable\n', status=503)
 
+		scheme = 'https' if req.is_secure() else 'http'
+
 		out = dict()
 		out['id'] = inbox_id
-		out['base_url'] = 'http://' + host + '/i/' + inbox_id + '/'
+		out['base_url'] = scheme + '://' + host + '/i/' + inbox_id + '/'
 		out['ttl'] = inbox['ttl']
 		response_mode = inbox.get('response_mode')
 		if not response_mode:
